@@ -1,7 +1,7 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
-import { fetchCountries } from './templates/fetch-countries.js';
+import { fetchCountries } from './js/fetch-countries.js';
 import countryCardList from './templates/countrylist.hbs';
 import countryCardInfo from './templates/countryinfo.hbs';
 
@@ -19,13 +19,13 @@ countryInput.addEventListener(
 
 function onCountrySearch() {
   const searchQuery = countryInput.value.trim();
+  countryList.innerHTML = '';
+  countryInfo.innerHTML = '';
   if (searchQuery === '') {
-    countryList.innerHTML = '';
-    countryInfo.innerHTML = '';
-    return;
+    fetchCountries(searchQuery).then(renderCountryCard).catch(onFetchError);
   }
 
-  fetchCountries(searchQuery).then(renderCountryCard).catch(onFetchError);
+  // fetchCountries(searchQuery).then(renderCountryCard).catch(onFetchError);
 }
 
 function renderCountryCard(country) {
