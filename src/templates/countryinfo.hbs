@@ -8,7 +8,6 @@
   <h2 class='country-title'>Country: {{name.official}}</h2>
   <p class='country-text'>Capital: {{capital}}</p>
   <p class='country-text'>Population: {{population}}</p>
-  {{#each this}}
-    <p class='country-text'>Languages: {{languages}}</p>
-  {{/each}}
+  <p class='country-text'>Languages:
+    {{#each languages}}{{#if @index}}, {{/if}}<span>{{this}}</span>{{/each}}</p>
 </div>

@@ -29,29 +29,26 @@ function onCountrySearch() {
 }
 
 function renderCountryCard(country) {
+  countryList.innerHTML = '';
+  countryInfo.innerHTML = '';
   if (country.length > 10) {
     Notiflix.Notify.info(
       'Too many matches found. Please enter a more specific name.'
     );
-    countryList.innerHTML = '';
-    countryInfo.innerHTML = '';
-    return;
   }
   if (country.length > 1 && country.length < 10) {
-    const markup = countryCardList(country);
-    countryInfo.innerHTML = '';
+    const markup = country.map(country => countryCardList(country)).join('');
     countryList.innerHTML = markup;
   }
   if (country.length === 1) {
-    const markup = countryCardInfo(country);
+    const markup = country.map(country => countryCardInfo(country)).join('');
     countryInfo.innerHTML = markup;
-    countryList.innerHTML = '';
   }
 }
 
-function onFetchError(country) {
+function onFetchError(error) {
   Notiflix.Notify.failure('Oops, there is no country with that name');
   countryList.innerHTML = '';
   countryInfo.innerHTML = '';
-  return country;
+  return error;
 }
